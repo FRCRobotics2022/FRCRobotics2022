@@ -27,7 +27,7 @@ public class DrivetrainHumanControlCommand extends CommandBase {
   @Override
   public void execute() {
     _drivetrainSubsytem.arcadeDrive(
-    _joystick.getRawAxis(RobotMap.JOYSTICK_FORWARD_AXIS), 
+     _joystick.getRawAxis(RobotMap.JOYSTICK_FORWARD_AXIS), 
     _joystick.getRawAxis(RobotMap.JOYSTICK_TURN_AXIS)
     );
   }
