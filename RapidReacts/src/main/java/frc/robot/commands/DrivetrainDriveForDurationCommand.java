@@ -4,46 +4,53 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotMap;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class DrivetrainHumanControlCommand extends CommandBase {
+public class DrivetrainDriveForDurationCommand extends CommandBase {
   private DrivetrainSubsystem _drivetrain;
-  private Joystick _joystick;
+  private Timer _driveTimer = new Timer();
+  private double _drivePower;
+  private double _duration;
 
-  /** Creates a new DrivetrainHumanControlCommand. */
-  public DrivetrainHumanControlCommand(DrivetrainSubsystem drivetrain, Joystick joystick) {
+  /** Creates a new IntakeEjectForDurationCommand. */
+  public DrivetrainDriveForDurationCommand(DrivetrainSubsystem drivetrain, double drivePower, double duration) {
     _drivetrain = drivetrain;
-    _joystick = joystick;
+    _drivePower = drivePower;
+    _duration = duration;
+
     addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    _driveTimer.reset();
+    _driveTimer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // CUT POWER MODE
-    boolean cutPower = false;
-    
-    if (_joystick.getRawAxis(RobotMap.CUT_POWER_AXIS) > .5) {
-      cutPower = true;
-    }
-
-    _drivetrain.arcadeDrive(_joystick.getRawAxis(RobotMap.JOYSTICK_FORWARD_AXIS), _joystick.getRawAxis(RobotMap.JOYSTICK_TURN_AXIS), cutPower);
+    _drivetrain.driveForward(_drivePower);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    _drivetrain.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean timeHasElapsed = false;
+
+    if (_driveTimer.get() >= _duration) {
+      timeHasElapsed = true;
+    }
+
+    return timeHasElapsed;
   }
 }
