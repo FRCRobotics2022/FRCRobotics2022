@@ -27,6 +27,7 @@ public class DrivetrainHumanControlCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+// <<<<<<< casscode05mar2022
     // CUT POWER MODE
     boolean cutPower = false;
     
@@ -35,6 +36,12 @@ public class DrivetrainHumanControlCommand extends CommandBase {
     }
 
     _drivetrain.arcadeDrive(_joystick.getRawAxis(RobotMap.JOYSTICK_FORWARD_AXIS), _joystick.getRawAxis(RobotMap.JOYSTICK_TURN_AXIS), cutPower);
+// code below was before CASS competition =======
+//    _drivetrainSubsytem.arcadeDrive(
+//     _joystick.getRawAxis(RobotMap.JOYSTICK_FORWARD_AXIS), 
+//    _joystick.getRawAxis(RobotMap.JOYSTICK_TURN_AXIS)
+//   );
+// >>>>>>> main
   }
 
   // Called once the command ends or is interrupted.

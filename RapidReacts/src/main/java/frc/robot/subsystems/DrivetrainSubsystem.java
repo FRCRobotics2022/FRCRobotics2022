@@ -49,6 +49,7 @@ public void arcadeDrive(double forwardPower, double turnPower, boolean cutPower)
   double driveLeftPower = forwardPower - turnPower; 
   double driveRightPower = forwardPower + turnPower;
 
+// <<<<<<< casscode05mar2022
   LeftMotorFront.set(driveLeftPower * -1 * cutPowerCoefficient);
   LeftMotorRear.set(driveLeftPower * -1 * cutPowerCoefficient);
   RightMotorFront.set(driveRightPower * cutPowerCoefficient);
@@ -61,6 +62,12 @@ public void arcadeDrive(double forwardPower, double turnPower, boolean cutPower)
 public void driveForward(double power) {
   this.arcadeDrive(power, 0, false);
 }
+// ==code below before CASS competition updates =====
+//    LeftMotorFront.set(driveLeftPower * -1);
+//    LeftMotorRear.set(driveLeftPower * -1);
+//    RightMotorFront.set(driveRightPower);
+//    RightMotorRear.set(driveRightPower);
+//  >>>>>>> main
 
 public void stop() {
   this.arcadeDrive(0, 0, false);

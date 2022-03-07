@@ -12,8 +12,8 @@ public class RobotMap{
     public static final int JOYSTICK_TURN_AXIS = 4;
 
     // Drivetrain
-    public static final int DRIVE_MOTOR_LEFT_FRONT = 1;
-    public static final int DRIVE_MOTOR_LEFT_REAR = 2;
-    public static final int DRIVE_MOTOR_RIGHT_FRONT = 3;
-    public static final int DRIVE_MOTOR_RIGHT_REAR= 4;
+    public static final int DRIVE_MOTOR_LEFT_FRONT = 3;
+    public static final int DRIVE_MOTOR_LEFT_REAR = 4;
+    public static final int DRIVE_MOTOR_RIGHT_FRONT = 1;
+    public static final int DRIVE_MOTOR_RIGHT_REAR= 2;
 }
