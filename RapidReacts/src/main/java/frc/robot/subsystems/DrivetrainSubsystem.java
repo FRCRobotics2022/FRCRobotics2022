@@ -7,9 +7,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.RobotMap;
+import frc.robot.Calibrations;
+import frc.robot.RobotMap;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   
@@ -21,7 +21,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
 
   /** Creates a new DrivetrainSubsystem. */
-  public DrivetrainSubsystem() {}
+  public DrivetrainSubsystem() {
+    LeftMotorFront.setOpenLoopRampRate(Calibrations.RAMP_RATE);
+    LeftMotorRear.setOpenLoopRampRate(Calibrations.RAMP_RATE);
+    RightMotorFront.setOpenLoopRampRate(Calibrations.RAMP_RATE);
+    RightMotorRear.setOpenLoopRampRate(Calibrations.RAMP_RATE);
+
+  }
 
   @Override
   public void periodic() {
@@ -29,15 +35,45 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
 
+// Observe the cut power argument that has been added
+public void arcadeDrive(double forwardPower, double turnPower, boolean cutPower) {
+  double turnCoefficient = .75;
+  turnPower = turnPower * turnCoefficient;
 
-public void arcadeDrive(double forwardPower, double turnPower) {
+  double cutPowerCoefficient = 1;
+
+  if (cutPower == true) {
+    cutPowerCoefficient = Calibrations.CUT_POWER_COEFFICIENT;
+  }
+
   double driveLeftPower = forwardPower - turnPower; 
   double driveRightPower = forwardPower + turnPower;
 
-  LeftMotorFront.set(driveLeftPower * -1);
-  LeftMotorRear.set(driveLeftPower * -1);
-  RightMotorFront.set(driveRightPower);
-  RightMotorRear.set(driveRightPower);
+// <<<<<<< casscode05mar2022
+  LeftMotorFront.set(driveLeftPower * -1 * cutPowerCoefficient);
+  LeftMotorRear.set(driveLeftPower * -1 * cutPowerCoefficient);
+  RightMotorFront.set(driveRightPower * cutPowerCoefficient);
+  RightMotorRear.set(driveRightPower * cutPowerCoefficient);
 
 }
+
+
+// Drive forward by calling the drive method with zero turning.
+public void driveForward(double power) {
+  this.arcadeDrive(power, 0, false);
 }
+// ==code below before CASS competition updates =====
+//    LeftMotorFront.set(driveLeftPower * -1);
+//    LeftMotorRear.set(driveLeftPower * -1);
+//    RightMotorFront.set(driveRightPower);
+//    RightMotorRear.set(driveRightPower);
+//  >>>>>>> main
+
+public void stop() {
+  this.arcadeDrive(0, 0, false);
+}
+}
+
+
+
+
